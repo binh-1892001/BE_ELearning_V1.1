@@ -21,6 +21,6 @@ public interface CourseService {
 
     Page<CourseDto> pagingCourseDto(Pageable pageable, String title,String home);
 
-
+    CourseDto enrollCourseByUser(Long courseId) throws CustomException;
 
 }

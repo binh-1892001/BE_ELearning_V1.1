@@ -14,14 +14,22 @@ import java.util.Set;
 @Setter
 @Builder
 public class Course extends BaseObject {
-	private String title;
-	private String image;
+    private String title;
+    private String image;
 
-	@Column(columnDefinition="LONGTEXT")
-	private String description;
-	private String subDescription;
+    @Column(columnDefinition = "LONGTEXT")
+    private String description;
+    private String subDescription;
 
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Chapter> chapters = new HashSet<>();
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Chapter> chapters = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "enroll_course",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<Users> userCourse = new HashSet<>();
 
 }
