@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class CourseController {
         courseService.deleteCourse(id);
     }
 
-    @Secured({"ROLE_SUBADMIN","ROLE_USER", "ROLE_ADMIN"})
+    @Secured({"ROLE_SUBADMIN", "ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/get-all")
     public ResponseEntity<List<CourseDto>> getAll() {
         List<CourseDto> ret = courseService.getAllCourse();
@@ -51,18 +52,22 @@ public class CourseController {
     }
 
     @GetMapping("/paging")
-    public ResponseEntity<Page<CourseDto>> paging(@RequestParam(required = false)String home,@PageableDefault(page = 0, size = 20,sort = "id",direction = Sort.Direction.DESC) Pageable pageable
+    public ResponseEntity<Page<CourseDto>> paging(@RequestParam(required = false) String home, @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
             , @RequestParam(required = false) String title) {
         Page<CourseDto> ret = courseService.pagingCourseDto(pageable, title, home);
         return ResponseEntity.ok(ret);
     }
 
-    @Secured({"ROLE_SUBADMIN","ROLE_USER", "ROLE_ADMIN"})
+    @Secured({"ROLE_SUBADMIN", "ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/{id}")
     public ResponseEntity<CourseDto> get(@PathVariable("id") Long id) throws CustomException {
         CourseDto ret = courseService.getCourseDtoById(id);
         return ResponseEntity.ok(ret);
     }
 
+    @PostMapping("/{idCourse}/enrollCourse")
+    public ResponseEntity<CourseDto> enrollCourse(@PathVariable Long idCourse) throws CustomException {
+        return new ResponseEntity<>(courseService.enrollCourseByUser(idCourse), HttpStatus.CREATED);
+    }
 
 }

@@ -42,7 +42,7 @@ public class SercurityConfig {
         return http
                 .cors(auth -> auth.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("https://test.mosoftvn.com/","http://test.mosoftvn.com/"));
+                    config.setAllowedOrigins(List.of("https://test.mosoftvn.com/", "http://test.mosoftvn.com/"));
                     config.setAllowedMethods(List.of("*"));
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(List.of("*"));
@@ -52,7 +52,16 @@ public class SercurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests((auth) ->
-                        auth.requestMatchers("/api/v1/auth/**","/public/**","/api/v1/user/register","/api/v1/user-clipboard","/api/img/**", "/api/v1/course/paging","/api/v1/file/upload-file").permitAll()
+                        auth.requestMatchers(
+                                        "/api/v1/auth/**",
+                                        "/public/**",
+                                        "/api/v1/user/register",
+                                        "/api/v1/user-clipboard",
+                                        "/api/img/**",
+                                        "/api/v1/course/paging",
+                                        "/api/v1/file/upload-file",
+                                        "/api/v1/teacher/**"
+                                ).permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling((auth) ->
                         auth.authenticationEntryPoint(jwtEntryPoint)
