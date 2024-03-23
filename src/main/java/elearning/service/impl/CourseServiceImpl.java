@@ -3,8 +3,10 @@ package elearning.service.impl;
 import elearning.dto.CourseDto;
 import elearning.exception.CustomException;
 import elearning.model.Course;
+import elearning.model.Users;
 import elearning.repository.CourseRepository;
 import elearning.service.CourseService;
+import elearning.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ import java.util.regex.Pattern;
 @Service
 public class CourseServiceImpl implements CourseService {
     @Autowired
+    private IUserService userService;
+    @Autowired
     CourseRepository courseRepository;
     @Autowired
     FileService fileService;
@@ -38,6 +42,7 @@ public class CourseServiceImpl implements CourseService {
         entity = courseRepository.save(entity);
         return new CourseDto(entity);
     }
+
     // upload file img
     private Course uploadFileImg(CourseDto dto, Course entity) throws IOException {
         if (dto.getImageFile() != null && !dto.getImageFile().isEmpty()) {
@@ -55,6 +60,7 @@ public class CourseServiceImpl implements CourseService {
         result = result.replaceAll("\\s+", "");
         return result;
     }
+
     @Override
     public CourseDto saveCourse(CourseDto dto) throws IOException {
         Course course = new Course();
@@ -70,10 +76,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(Long id) throws CustomException {
-        Course course = courseRepository.findById(id).orElseThrow(() -> new CustomException("Course not found") );
-        if(course.getVoided() == null || course.getVoided() == false){
+        Course course = courseRepository.findById(id).orElseThrow(() -> new CustomException("Course not found"));
+        if (course.getVoided() == null || course.getVoided() == false) {
             course.setVoided(true);
-        }else {
+        } else {
             course.setVoided(false);
         }
         courseRepository.save(course);
@@ -98,9 +104,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<CourseDto> pagingCourseDto(Pageable pageable, String title,String home) {
+    public Page<CourseDto> pagingCourseDto(Pageable pageable, String title, String home) {
         Page<CourseDto> page = courseRepository.getCoursePage(pageable, title, home);
         return page;
     }
 
+    @Override
+    public CourseDto enrollCourseByUser(Long courseId) throws CustomException {
+        Users users = userService.getCurrentUser();
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new CustomException("course not found"));
+        course.getUserCourse().add(users);
+        return new CourseDto(courseRepository.save(course));
+    }
 }
