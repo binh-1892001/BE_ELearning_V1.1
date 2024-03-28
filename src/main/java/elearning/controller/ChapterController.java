@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,18 +20,19 @@ public class ChapterController {
 
     @Autowired
     private ChapterService chapterService;
-
+    @PreAuthorize("hasAnyAuthority('ROLE_SUBADMIN','ROLE_ADMIN')")
     @PostMapping("/save")
     public ResponseEntity<ChapterDto> save(@RequestBody ChapterDto request) throws CustomException {
         ChapterDto ret = chapterService.saveChapter(request);
         return ResponseEntity.ok(ret);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_SUBADMIN','ROLE_ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<ChapterDto> update(@RequestBody ChapterDto request, @PathVariable Long id) throws CustomException {
         ChapterDto ret = chapterService.upDateChapter(request, id);
         return ResponseEntity.ok(ret);
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_SUBADMIN','ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) throws CustomException {
         chapterService.deleteChapter(id);
