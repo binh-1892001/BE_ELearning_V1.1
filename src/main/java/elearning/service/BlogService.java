@@ -18,5 +18,5 @@ public interface BlogService {
 
     List<Blog> getAll();
 
-    BlogDto upDateChapter(BlogDto dto, Long id) throws CustomException;
+    BlogDto upDateBlogs(BlogDto dto, Long id) throws CustomException;
 }
