@@ -71,7 +71,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public BlogDto upDateChapter(BlogDto dto, Long id) throws CustomException {
+    public BlogDto upDateBlogs(BlogDto dto, Long id) throws CustomException {
         Blog blog = blogRepository.findById(id).orElseThrow(() -> new CustomException("Blog not found"));
         return this.save(blog, dto);
     }

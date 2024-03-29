@@ -3,10 +3,12 @@ package elearning.controller;
 import elearning.dto.BlogDto;
 import elearning.exception.CustomException;
 import elearning.model.Blog;
+import elearning.repository.BlogRepository;
 import elearning.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +19,19 @@ public class BlogController {
     @Autowired
     BlogService blogService;
 
+    @Autowired
+    BlogRepository blogRepository;
+
     @GetMapping("/")
     public ResponseEntity<List<Blog>> getAll() {
         List<Blog> blogs = blogService.getAll();
+        return new ResponseEntity<>(blogs, HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Blog>> getAllBlogsByUserLogin(Authentication authentication) {
+        String phoneNumber = authentication.getName();
+        List<Blog> blogs = blogRepository.findAllBlogsByUserLogin(phoneNumber);
         return new ResponseEntity<>(blogs, HttpStatus.OK);
     }
 
