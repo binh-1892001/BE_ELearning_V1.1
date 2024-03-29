@@ -26,7 +26,7 @@ public class CourseController {
 	
 	@Secured({"ROLE_ADMIN", "ROLE_SUBADMIN"})
 	@PostMapping("/save")
-	public ResponseEntity<CourseDto> save(@ModelAttribute CourseDto request) throws IOException {
+	public ResponseEntity<CourseDto> save(@ModelAttribute CourseDto request) throws IOException, CustomException {
 		CourseDto ret = courseService.saveCourse(request);
 		return ResponseEntity.ok(ret);
 	}

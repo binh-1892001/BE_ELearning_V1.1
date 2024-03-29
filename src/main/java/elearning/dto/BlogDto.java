@@ -2,11 +2,8 @@ package elearning.dto;
 
 import elearning.dto.base.BaseObjectDto;
 import elearning.model.Blog;
-import elearning.model.base.BaseObject;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter

@@ -42,7 +42,7 @@ public class SercurityConfig {
 		return http
 				  .cors(auth -> auth.configurationSource(request -> {
 					  CorsConfiguration config = new CorsConfiguration();
-					  config.setAllowedOrigins(List.of("https://test.mosoftvn.com/", "http://test.mosoftvn.com/","http://localhost:5173/"));
+					  config.setAllowedOrigins(List.of("https://test.mosoftvn.com/", "http://test.mosoftvn.com/","http://localhost:5173/","http://10.101.14.69:5173/"));
 					  config.setAllowedMethods(List.of("*"));
 					  config.setAllowCredentials(true);
 					  config.setAllowedHeaders(List.of("*"));

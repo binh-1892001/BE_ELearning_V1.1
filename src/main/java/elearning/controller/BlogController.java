@@ -58,7 +58,7 @@ public class BlogController {
     @PutMapping("/update/{id}")
     public ResponseEntity<BlogDto> update(@RequestBody BlogDto blogDto, @PathVariable Long id) {
         try {
-            BlogDto updatedBlog = blogService.upDateChapter(blogDto, id);
+            BlogDto updatedBlog = blogService.upDateBlogs(blogDto, id);
             return new ResponseEntity<>(updatedBlog, HttpStatus.OK);
         } catch (CustomException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
