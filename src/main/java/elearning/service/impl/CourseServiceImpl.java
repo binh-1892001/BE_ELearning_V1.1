@@ -6,13 +6,17 @@ import elearning.model.Course;
 import elearning.model.Teacher;
 import elearning.model.Users;
 import elearning.repository.CourseRepository;
+import elearning.repository.IUserRepository;
 import elearning.repository.TeacherRepository;
+import elearning.repository.UserRepository;
+import elearning.security.user_principal.UserPrincipal;
 import elearning.service.CourseService;
 import elearning.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -36,6 +40,8 @@ public class CourseServiceImpl implements CourseService {
 	private TeacherRepository teacherRepository;
 	@Autowired
 	FileService fileService;
+	@Autowired
+	private IUserRepository userRepository;
 	
 	public CourseDto save(Course entity, CourseDto dto) throws IOException, CustomException {
 		entity.setVoided(dto.isVoided());

@@ -2,6 +2,7 @@ package elearning.service;
 
 import elearning.dto.ChapterDto;
 import elearning.dto.CommentDto;
+import elearning.dto.CourseDto;
 import elearning.exception.CustomException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +23,7 @@ public interface CommentService {
     Page<CommentDto> pagingCommentDto(Pageable pageable);
     Page<CommentDto> pagingCommentParent(Pageable pageable);
     Page<CommentDto> pagingCommentChildrenByParentId(Pageable pageable, Long parentId);
+    
+    List<CommentDto> getAllCommentByLesson(Long idLesson);
 
 }

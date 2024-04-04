@@ -20,6 +20,7 @@ public class CourseDto extends BaseObjectDto {
 	private TeacherDto teacherDto;
 	private Long teacherId;
 	private int totalChap;
+	private boolean isLike;
 	
 	public CourseDto() {
 	}
