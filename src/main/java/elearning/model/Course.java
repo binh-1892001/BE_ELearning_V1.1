@@ -1,5 +1,6 @@
 package elearning.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import elearning.model.base.BaseObject;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,7 @@ public class Course extends BaseObject {
 	private String subDescription;
 	
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Set<Chapter> chapters = new HashSet<>();
 	
 	@ManyToMany
