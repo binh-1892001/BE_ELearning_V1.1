@@ -46,7 +46,7 @@ public class BlogController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<BlogDto> save(@RequestBody BlogDto blogDto) {
+    public ResponseEntity<BlogDto> save(@ModelAttribute BlogDto blogDto) {
         try {
             BlogDto createdBlog = blogService.save(blogDto);
             return new ResponseEntity<>(createdBlog, HttpStatus.CREATED);
@@ -56,7 +56,7 @@ public class BlogController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<BlogDto> update(@RequestBody BlogDto blogDto, @PathVariable Long id) {
+    public ResponseEntity<BlogDto> update(@ModelAttribute BlogDto blogDto, @PathVariable Long id) {
         try {
             BlogDto updatedBlog = blogService.upDateBlogs(blogDto, id);
             return new ResponseEntity<>(updatedBlog, HttpStatus.OK);

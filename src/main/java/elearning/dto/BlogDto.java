@@ -4,6 +4,7 @@ import elearning.dto.base.BaseObjectDto;
 import elearning.model.Blog;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ public class BlogDto extends BaseObjectDto {
     private String image;
     private int likes;
     private UsersDto usersDto;
+    private MultipartFile fileUpload;
 
 
     public BlogDto() {
