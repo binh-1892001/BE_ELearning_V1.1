@@ -2,9 +2,10 @@ package elearning.dto;
 
 import elearning.dto.base.BaseObjectDto;
 import elearning.model.Chapter;
-import elearning.model.Course;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 
 @Getter

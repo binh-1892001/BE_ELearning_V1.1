@@ -1,5 +1,6 @@
 package elearning.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import elearning.model.base.BaseObject;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,5 +27,6 @@ public class Comment extends BaseObject {
 	private Comment comment;
 
 	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Set<Comment> commentChildren = new HashSet<>();
 }

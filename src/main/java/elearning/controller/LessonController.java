@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,18 +21,19 @@ public class LessonController {
 
     @Autowired
     private LessonService lessonService;
-
+    @PreAuthorize("hasAnyAuthority('ROLE_SUBADMIN','ROLE_ADMIN')")
     @PostMapping("/save")
     public ResponseEntity<LessonDto> save(@RequestBody LessonDto request) throws CustomException {
         LessonDto ret = lessonService.saveLesson(request);
         return ResponseEntity.ok(ret);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_SUBADMIN','ROLE_ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<LessonDto> update(@RequestBody LessonDto request, @PathVariable Long id) throws CustomException {
         LessonDto ret = lessonService.upDateLesson(request, id);
         return ResponseEntity.ok(ret);
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_SUBADMIN','ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) throws CustomException {
         lessonService.deleteLesson(id);
