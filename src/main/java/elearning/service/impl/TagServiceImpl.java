@@ -15,7 +15,7 @@ public class TagServiceImpl implements ITagService {
     TagRepository tagRepository;
 
     @Override
-    public List<Tags> findAllByTitle(String title) {
-        return tagRepository.findAllByTitle(title);
+    public List<Tags> findAll() {
+        return tagRepository.findAll();
     }
 }
