@@ -16,7 +16,7 @@ import java.util.List;
 public class TagController {
     @Autowired
     ITagService tagService;
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<Tags>> getAll(){
         List<Tags> tagsList = tagService.findAll();
         return new ResponseEntity<>(tagsList, HttpStatus.OK);
