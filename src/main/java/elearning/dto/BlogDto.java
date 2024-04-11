@@ -25,7 +25,7 @@ public class BlogDto extends BaseObjectDto {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.tags = entity.getTags();
+//        this.tags = entity.getTags();
         this.image = entity.getImage();
         this.likes = entity.getLikes();
     }

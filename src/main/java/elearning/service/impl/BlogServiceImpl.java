@@ -36,7 +36,6 @@ public class BlogServiceImpl implements BlogService {
 		entity.setTitle(dto.getTitle());
 		entity.setLikes(dto.getLikes());
 		entity.setImage(fileService.uploadFile(dto.getFileUpload()));
-		entity.setTags(dto.getTags());
 		entity.setContent(dto.getContent());
 		blogRepository.save(entity);
 		return new BlogDto(entity);
