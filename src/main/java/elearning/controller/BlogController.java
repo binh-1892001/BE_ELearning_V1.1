@@ -5,6 +5,7 @@ import elearning.exception.CustomException;
 import elearning.model.Blog;
 import elearning.repository.BlogRepository;
 import elearning.service.BlogService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
