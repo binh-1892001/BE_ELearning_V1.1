@@ -12,7 +12,8 @@ import lombok.*;
 @Setter
 @Builder
 public class Teacher extends BaseObject {
-    private String name;
-    private String image;
-    private String specialize;
+	private String name;
+	private String image;
+	private String specialize;
+	private Boolean status;
 }

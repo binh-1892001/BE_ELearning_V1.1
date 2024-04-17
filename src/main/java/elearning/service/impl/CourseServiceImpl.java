@@ -5,10 +5,7 @@ import elearning.exception.CustomException;
 import elearning.model.Course;
 import elearning.model.Teacher;
 import elearning.model.Users;
-import elearning.repository.CourseRepository;
-import elearning.repository.IUserRepository;
-import elearning.repository.TeacherRepository;
-import elearning.repository.UserRepository;
+import elearning.repository.*;
 import elearning.security.user_principal.UserPrincipal;
 import elearning.service.CourseService;
 import elearning.service.IUserService;
@@ -42,6 +39,8 @@ public class CourseServiceImpl implements CourseService {
 	FileService fileService;
 	@Autowired
 	private IUserRepository userRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	public CourseDto save(Course entity, CourseDto dto) throws IOException, CustomException {
 		entity.setVoided(dto.isVoided());
@@ -92,12 +91,13 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public void deleteCourse(Long id) throws CustomException {
 		Course course = courseRepository.findById(id).orElseThrow(() -> new CustomException("Course not found"));
-		if (course.getVoided() == null || course.getVoided() == false) {
-			course.setVoided(true);
+		if(categoryRepository.existsByCourseId(id)) {
+			course.setVoided(!course.getVoided());
+			courseRepository.save(course);
 		} else {
-			course.setVoided(false);
+			courseRepository.deleteById(id);
 		}
-		courseRepository.save(course);
+//		courseRepository.save(course);
 	}
 	
 	@Override

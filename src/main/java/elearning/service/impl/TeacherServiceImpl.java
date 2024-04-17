@@ -3,6 +3,7 @@ package elearning.service.impl;
 import elearning.dto.TeacherDto;
 import elearning.exception.CustomException;
 import elearning.model.Teacher;
+import elearning.repository.CourseRepository;
 import elearning.repository.TeacherRepository;
 import elearning.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.util.List;
 public class TeacherServiceImpl implements ITeacherService {
 	@Autowired
 	private TeacherRepository teacherRepository;
+	@Autowired
+	private CourseRepository courseRepository;
 	@Autowired
 	private FileService fileService;
 	
@@ -33,6 +36,7 @@ public class TeacherServiceImpl implements ITeacherService {
 				  .name(dto.getName())
 				  .image(fileService.uploadFile(dto.getImageFile()))
 				  .specialize(dto.getSpecialize())
+				  .status(true)
 				  .build();
 		return new TeacherDto(teacherRepository.save(teacher));
 	}
@@ -49,7 +53,13 @@ public class TeacherServiceImpl implements ITeacherService {
 	@Override
 	public String deleteById(Long idTeacher) throws CustomException {
 		if (teacherRepository.findById(idTeacher).isPresent()) {
-			teacherRepository.deleteById(idTeacher);
+			if (courseRepository.existsByTeacherId(idTeacher)) {
+				Teacher teacher = teacherRepository.findById(idTeacher).orElseThrow(() -> new CustomException("teacher not found"));
+				teacher.setStatus(!teacher.getStatus());
+				teacherRepository.save(teacher);
+			} else {
+				teacherRepository.deleteById(idTeacher);
+			}
 			return "delete teacher successfully";
 		}
 		throw new CustomException("teacher not found");

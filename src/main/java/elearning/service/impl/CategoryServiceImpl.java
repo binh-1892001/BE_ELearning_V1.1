@@ -60,8 +60,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Long id) throws CustomException {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new CustomException("category not found"));
-        category.setVoided(!category.isStatus());
-        categoryRepository.save(category);
+        if(category.getCourse() == null) {
+            categoryRepository.deleteById(id);
+        } else {
+            category.setVoided(!category.isStatus());
+            categoryRepository.save(category);
+        }
     }
 
     @Override

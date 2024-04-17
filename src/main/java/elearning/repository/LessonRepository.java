@@ -18,4 +18,6 @@ public interface LessonRepository extends JpaRepository<Lesson,Long> {
     @Query("select new elearning.dto.LessonDto(e, true) from Lesson e"
             + " Where  ( :title is null or  e.title like concat('%',:title,'%'))")
     Page<LessonDto> getLessonPage(Pageable pageable, String title);
+    
+    boolean existsByChapterId(Long chapterId);
 }

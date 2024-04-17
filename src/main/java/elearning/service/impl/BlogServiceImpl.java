@@ -35,7 +35,7 @@ public class BlogServiceImpl implements BlogService {
 		entity.setUsers(users);
 		entity.setTitle(dto.getTitle());
 		entity.setLikes(dto.getLikes());
-		entity.setImage(dto.getFileUpload() != null ? fileService.uploadFile(dto.getFileUpload()):entity.getImage());
+		entity.setImage(dto.getFileUpload() != null ? fileService.uploadFile(dto.getFileUpload()) : entity.getImage());
 		entity.setTags(dto.getTags());
 		entity.setContent(dto.getContent());
 		blogRepository.save(entity);
@@ -64,7 +64,7 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public void delete(Long id) throws CustomException {
 		Blog blog = blogRepository.findById(id).orElseThrow(() -> new CustomException("Blog not found"));
-		blogRepository.save(blog);
+		blogRepository.deleteById(id);
 	}
 	
 	@Override

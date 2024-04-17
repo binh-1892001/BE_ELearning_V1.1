@@ -33,4 +33,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	
 	@Transactional
 	void deleteAllByCommentId(Long parentId);
+	void deleteAllByLessonId(Long lessonId);
 }
