@@ -45,7 +45,9 @@ public class TeacherServiceImpl implements ITeacherService {
 	public TeacherDto update(TeacherDto dto, Long idTeacher) throws CustomException {
 		Teacher teacher = teacherRepository.findById(idTeacher).orElseThrow(() -> new CustomException("teacher not found"));
 		teacher.setName(dto.getName());
-		teacher.setImage(fileService.uploadFile(dto.getImageFile()));
+		if (dto.getImageFile() != null) {
+			teacher.setImage(fileService.uploadFile(dto.getImageFile()));
+		}
 		teacher.setSpecialize(dto.getSpecialize());
 		return new TeacherDto(teacherRepository.save(teacher));
 	}
