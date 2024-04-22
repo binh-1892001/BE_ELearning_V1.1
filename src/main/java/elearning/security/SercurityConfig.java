@@ -63,7 +63,7 @@ public class SercurityConfig {
 												  "/api/v1/teacher/**",
 												  "/api/v1/chapter/**",
 												  "/api/v1/lesson/**",
-												  "/api/v1/blogs/**"
+												  "/api/v1/blogs/{id}","/api/v1/blogs/"
 										).permitAll()
 										.anyRequest().authenticated())
 				  .exceptionHandling((auth) ->
