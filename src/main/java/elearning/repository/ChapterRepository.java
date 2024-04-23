@@ -3,6 +3,7 @@ package elearning.repository;
 import elearning.dto.ChapterDto;
 import elearning.dto.CourseDto;
 import elearning.model.Chapter;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +24,7 @@ public interface ChapterRepository extends JpaRepository<Chapter,Long> {
     @Query("select new elearning.dto.ChapterDto(e, true) from Chapter e"
             + " Where ( e.course.id = :courseId )")
     List<ChapterDto> getChaptersByCourseId(Long courseId);
+    
+    @Transactional
+    void deleteAllByCourseId(Long courseId);
 }

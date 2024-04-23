@@ -3,12 +3,14 @@ package elearning.service.impl;
 import elearning.dto.CourseDto;
 import elearning.exception.CustomException;
 import elearning.model.Course;
+import elearning.model.Lesson;
 import elearning.model.Teacher;
 import elearning.model.Users;
 import elearning.repository.*;
 import elearning.security.user_principal.UserPrincipal;
 import elearning.service.CourseService;
 import elearning.service.IUserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -41,6 +43,12 @@ public class CourseServiceImpl implements CourseService {
 	private IUserRepository userRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private CommentRepository commentRepository;
+	@Autowired
+	private LessonRepository lessonRepository;
+	@Autowired
+	private ChapterRepository chapterRepository;
 	
 	public CourseDto save(Course entity, CourseDto dto) throws IOException, CustomException {
 		entity.setVoided(dto.isVoided());
@@ -89,12 +97,18 @@ public class CourseServiceImpl implements CourseService {
 	
 	
 	@Override
+	@Transactional
 	public void deleteCourse(Long id) throws CustomException {
 		Course course = courseRepository.findById(id).orElseThrow(() -> new CustomException("Course not found"));
-		if(categoryRepository.existsByCourseId(id)) {
+		if (categoryRepository.existsByCourseId(id)) {
 			course.setVoided(!course.getVoided());
 			courseRepository.save(course);
 		} else {
+			courseRepository.deleteAllWishListByCourseId(id);
+//			courseRepository.deleteAllCommentByLessonId();
+			commentRepository.deleteAllByLessonChapterCourseId(id);
+			lessonRepository.deleteAllByChapterCourseId(id);
+			chapterRepository.deleteAllByCourseId(id);
 			courseRepository.deleteById(id);
 		}
 //		courseRepository.save(course);
